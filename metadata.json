@@ -1,0 +1,7 @@
+{
+  "name": "AutoPawn Enterprise",
+  "description": "A comprehensive car pawn and finance management system with RBAC, contract tracking, and interest calculation.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
