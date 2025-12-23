@@ -1,12 +1,13 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   TrendingUp, 
   Users, 
   FileText, 
   AlertCircle,
   ArrowUpRight,
-  ArrowDownRight
+  ArrowDownRight,
+  Loader2
 } from 'lucide-react';
 import { 
   AreaChart, 
@@ -15,10 +16,7 @@ import {
   YAxis, 
   CartesianGrid, 
   Tooltip, 
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  Cell
+  ResponsiveContainer
 } from 'recharts';
 import { formatCurrency } from '../lib/utils';
 
@@ -50,8 +48,24 @@ const StatCard = ({ title, value, icon: Icon, trend, color }: any) => (
 );
 
 const Dashboard: React.FC = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="h-full w-full flex flex-col items-center justify-center text-slate-400">
+        <Loader2 className="animate-spin mb-4" size={48} />
+        <p className="font-medium">กำลังเตรียมข้อมูลแดชบอร์ด...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-in fade-in duration-500">
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard 
@@ -121,10 +135,10 @@ const Dashboard: React.FC = () => {
           <h3 className="font-bold text-slate-800 mb-6">ความเคลื่อนไหวล่าสุด</h3>
           <div className="flex-1 space-y-6">
             {[
-              { type: 'payment', title: 'รับชำระดอกเบี้ย', desc: 'สัญญา CONT-004 (คุณพรชัย)', amount: '+฿1,250', time: '10 นาทีที่แล้ว', color: 'bg-emerald-50 text-emerald-600' },
-              { type: 'contract', title: 'สร้างสัญญาใหม่', desc: 'Toyota Fortuner (คุณวิไล)', amount: '-฿450,000', time: '1 ชม. ที่แล้ว', color: 'bg-blue-50 text-blue-600' },
-              { type: 'overdue', title: 'แจ้งเตือนค้างชำระ', desc: 'Honda Civic (คุณสมบัติ)', amount: 'ค้าง 3 วัน', time: '3 ชม. ที่แล้ว', color: 'bg-amber-50 text-amber-600' },
-              { type: 'payment', title: 'รับชำระดอกเบี้ย', desc: 'สัญญา CONT-012 (คุณกิตติ)', amount: '+฿3,400', time: '5 ชม. ที่แล้ว', color: 'bg-emerald-50 text-emerald-600' },
+              { type: 'payment', title: 'รับชำระดอกเบี้ย', desc: 'สัญญา CONT-001 (คุณสมชาย)', amount: '+฿6,250', time: '10 นาทีที่แล้ว', color: 'bg-emerald-50 text-emerald-600' },
+              { type: 'contract', title: 'สร้างสัญญาใหม่', desc: 'Honda Civic (คุณสิรินทร์)', amount: '-฿350,000', time: '1 ชม. ที่แล้ว', color: 'bg-blue-50 text-blue-600' },
+              { type: 'overdue', title: 'แจ้งเตือนค้างชำระ', desc: 'Isuzu D-Max (คุณพรชัย)', amount: 'ค้าง 3 วัน', time: '3 ชม. ที่แล้ว', color: 'bg-amber-50 text-amber-600' },
+              { type: 'payment', title: 'รับชำระดอกเบี้ย', desc: 'สัญญา CONT-2023-002', amount: '+฿5,250', time: '5 ชม. ที่แล้ว', color: 'bg-emerald-50 text-emerald-600' },
             ].map((item, idx) => (
               <div key={idx} className="flex gap-4">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 font-bold text-xs ${item.color}`}>

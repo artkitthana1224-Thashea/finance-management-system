@@ -6,6 +6,9 @@ import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import Customers from './components/Customers';
 import Contracts from './components/Contracts';
+import Vehicles from './components/Vehicles';
+import Payments from './components/Payments';
+import Reports from './components/Reports';
 import { ShieldCheck, Loader2 } from 'lucide-react';
 
 const LoginPage = ({ onLogin }: { onLogin: (u: User) => void }) => {
@@ -30,65 +33,75 @@ const LoginPage = ({ onLogin }: { onLogin: (u: User) => void }) => {
 
   return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden">
-        <div className="bg-blue-600 p-8 text-white text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-2xl mb-4 backdrop-blur-sm">
-            <ShieldCheck size={32} />
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in duration-300">
+        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-10 text-white text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-4 opacity-10">
+            <ShieldCheck size={120} />
           </div>
-          <h1 className="text-2xl font-bold">AutoPawn Enterprise</h1>
-          <p className="text-blue-100 mt-2 opacity-80">ระบบจัดการรับจำนำรถยนต์ระดับองค์กร</p>
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-3xl mb-6 backdrop-blur-md shadow-inner">
+            <ShieldCheck size={40} />
+          </div>
+          <h1 className="text-3xl font-extrabold tracking-tight">AutoPawn</h1>
+          <p className="text-blue-100 mt-2 opacity-80 font-medium">Enterprise Management System</p>
         </div>
         
-        <form onSubmit={handleSubmit} className="p-8 space-y-6">
-          <div className="space-y-1">
-            <label className="text-sm font-semibold text-slate-700">บัญชีผู้ใช้</label>
+        <form onSubmit={handleSubmit} className="p-10 space-y-8">
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">บัญชีผู้ใช้</label>
             <input 
               type="email" 
               required
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+              className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium"
               placeholder="admin@autopawn.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           
-          <div className="space-y-1">
-            <label className="text-sm font-semibold text-slate-700">รหัสผ่าน</label>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">รหัสผ่าน</label>
             <input 
               type="password" 
               required
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+              className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium"
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm font-medium text-center">{error}</p>}
+          {error && (
+            <div className="p-4 bg-rose-50 text-rose-600 text-sm font-bold rounded-2xl border border-rose-100 text-center animate-bounce">
+              {error}
+            </div>
+          )}
 
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-500/30 transition-all flex items-center justify-center gap-2"
+            className="w-full bg-blue-600 text-white py-5 rounded-2xl font-black text-xl hover:bg-blue-700 focus:ring-4 focus:ring-blue-500/30 transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-600/20 active:scale-95"
           >
             {loading ? <Loader2 className="animate-spin" size={24} /> : 'เข้าสู่ระบบ'}
           </button>
 
-          <div className="pt-4 border-t border-slate-100 grid grid-cols-2 gap-2">
-            <button 
-              type="button" 
-              onClick={() => { setEmail('admin@autopawn.com'); setPassword('password'); }}
-              className="text-[10px] uppercase font-bold text-slate-400 hover:text-blue-600 text-center"
-            >
-              Log in as Admin
-            </button>
-            <button 
-              type="button" 
-              onClick={() => { setEmail('finance@autopawn.com'); setPassword('password'); }}
-              className="text-[10px] uppercase font-bold text-slate-400 hover:text-blue-600 text-center"
-            >
-              Log in as Finance
-            </button>
+          <div className="pt-6 border-t border-slate-100 flex flex-col gap-3">
+             <p className="text-[10px] text-slate-400 font-bold uppercase text-center tracking-widest">Demo Accounts</p>
+             <div className="grid grid-cols-2 gap-3">
+              <button 
+                type="button" 
+                onClick={() => { setEmail('admin@autopawn.com'); setPassword('password'); }}
+                className="py-2 px-3 text-[10px] uppercase font-black bg-slate-50 border border-slate-200 rounded-xl text-slate-500 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all"
+              >
+                Administrator
+              </button>
+              <button 
+                type="button" 
+                onClick={() => { setEmail('finance@autopawn.com'); setPassword('password'); }}
+                className="py-2 px-3 text-[10px] uppercase font-black bg-slate-50 border border-slate-200 rounded-xl text-slate-500 hover:text-emerald-600 hover:border-emerald-200 hover:bg-emerald-50 transition-all"
+              >
+                Finance Manager
+              </button>
+             </div>
           </div>
         </form>
       </div>
@@ -102,7 +115,6 @@ const App: React.FC = () => {
   const [isInitializing, setIsInitializing] = useState(true);
 
   useEffect(() => {
-    // Check if user is already logged in (persistence)
     const storedUser = authService.getCurrentUser();
     if (storedUser) setUser(storedUser);
     setIsInitializing(false);
@@ -133,6 +145,12 @@ const App: React.FC = () => {
         return <Customers />;
       case 'contracts':
         return <Contracts />;
+      case 'vehicles':
+        return <Vehicles />;
+      case 'payments':
+        return <Payments />;
+      case 'reports':
+        return <Reports />;
       default:
         return (
           <div className="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-dashed border-slate-300">
@@ -149,7 +167,9 @@ const App: React.FC = () => {
       currentPage={currentPage} 
       setCurrentPage={setCurrentPage}
     >
-      {renderContent()}
+      <div key={currentPage} className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+        {renderContent()}
+      </div>
     </Layout>
   );
 };
